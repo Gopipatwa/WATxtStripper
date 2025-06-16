@@ -136,17 +136,47 @@ function saveToFile() {
 
 <style scoped>
 .app {
-  min-height: 100vh;
+  min-height: 90vh;
   background: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s, color 0.3s;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .container {
-  max-width: 1200px;
+  width: min(100%, 800px);
   margin: 0 auto;
-  padding: 2rem;
+  min-height: fit-content;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 100%;
+}
+
+.toast {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-color);
+  color: white;
+  border-radius: 0.75rem;
+  z-index: 100;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.3s ease;
+  width: calc(100% - 2rem);
+  max-width: 400px;
+  text-align: center;
 }
 
 header {
@@ -156,56 +186,55 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  padding: 1rem 2rem;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
   background: var(--glass-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-radius: 1rem;
+  border-radius: 0.75rem;
 }
 
 h1 {
-  font-size: 1.875rem;
+  font-size: clamp(1.25rem, 5vw, 1.875rem);
   font-weight: 600;
 }
 
 h2 {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 4vw, 1.25rem);
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   color: var(--text-secondary);
 }
 
 .theme-toggle {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  padding: 0.75rem;
-  border-radius: 0.75rem;
+  border-radius: 50%;
   transition: all 0.2s ease;
-}
-
-.theme-toggle:hover {
-  background: var(--bg-secondary);
-  transform: rotate(15deg);
+  touch-action: manipulation;
 }
 
 .text-input, .text-output {
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   border: 1px solid var(--border-color);
   border-radius: 0.75rem;
   background: var(--bg-secondary);
   color: var(--text-primary);
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.5;
   transition: all 0.2s ease;
   overflow: auto;
   resize: none;
-  height: auto;
-  min-height: 200px;
-  max-height: 50vh;
+  height: clamp(120px, 25vh, 200px);
+  max-height: unset;
 }
 
 .text-input:focus {
@@ -218,105 +247,93 @@ h2 {
   text-align: left;
   margin: 0;
   background: var(--bg-primary);
+  font-size: 0.9375rem;
 }
 
 .users-section {
-  margin: 2rem 0;
-  padding: 1.5rem;
-  border-radius: 1rem;
+  margin: 0.75rem 0;
+  padding: 1rem;
+  border-radius: 0.75rem;
   overflow: hidden;
 }
 
 .user-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
   padding: 0.5rem;
-  max-height: 300px;
+  max-height: 160px;
   overflow-y: auto;
 }
 
 .user-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   padding: 0.75rem;
   background: var(--bg-primary);
   border-radius: 0.75rem;
   border: 1px solid var(--border-color);
   transition: transform 0.2s ease;
+  touch-action: manipulation;
 }
 
-.user-item:hover {
-  transform: translateY(-2px);
+.user-name {
+  font-size: 0.9375rem;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
 }
 
 .emoji-input {
-  width: 3rem;
+  width: 44px;
+  height: 44px;
   padding: 0.25rem;
   text-align: center;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   color: var(--text-primary);
+  flex-shrink: 0;
 }
 
 .input-section, .output-section {
-  padding: 1.5rem;
+  padding: 1rem;
   background: var(--bg-secondary);
-  border-radius: 1rem;
-  margin-bottom: 2rem;
+  border-radius: 0.75rem;
+  margin: 0;
 }
 
 .actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 button {
-  padding: 0.75rem 1.5rem;
+  height: 44px;
+  padding: 0 1rem;
   border: none;
   border-radius: 0.75rem;
   color: white;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
-  min-width: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-md);
-}
-
-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0));
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-button:hover::before {
-  opacity: 1;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:active {
   transform: translateY(1px);
-  box-shadow: var(--shadow-sm);
 }
 
 .actions button:first-child {
@@ -327,42 +344,77 @@ button:active {
   background: linear-gradient(135deg, var(--save-from), var(--save-to));
 }
 
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.75rem 1.5rem;
-  background: var(--accent-color);
-  color: white;
-  border-radius: 0.75rem;
-  z-index: 100;
-  box-shadow: var(--shadow-lg);
-  animation: slideUp 0.3s ease;
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+  
+  header {
+    padding: 0.5rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+  
+  .input-section, .output-section {
+    padding: 0.75rem;
+  }
+  
+  .text-input, .text-output {
+    font-size: 0.9375rem;
+    padding: 0.625rem;
+  }
+  
+  .user-grid {
+    grid-template-columns: 1fr;
+    max-height: 160px;
+  }
+  
+  .actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  button {
+    width: 100%;
+    height: 44px;
+    font-size: 1rem;
+  }
 }
 
-@keyframes slideUp {
-  from {
-    transform: translate(-50%, 100%);
-    opacity: 0;
+@media (hover: hover) {
+  .theme-toggle:hover {
+    background: var(--bg-secondary);
+    transform: rotate(15deg);
   }
-  to {
-    transform: translate(-50%, 0);
+  
+  .user-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  button:hover::before {
     opacity: 1;
   }
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-  
+@supports not (backdrop-filter: blur(8px)) {
   header {
-    padding: 0.75rem 1rem;
-  }
-  
-  .user-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    background: var(--bg-primary);
   }
 }
 </style>
