@@ -1,0 +1,192 @@
+:root {
+  /* Base Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --border-color: #e2e8f0;
+  
+  /* Button Colors */
+  --copy-from: #10b981;
+  --copy-to: #059669;
+  --save-from: #6366f1;
+  --save-to: #4f46e5;
+  --share-from: #f59e0b;
+  --share-to: #d97706;
+  
+  /* Action Colors */
+  --accent-color: #3b82f6;
+  --hover-color: #2563eb;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05),
+               0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05),
+               0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05),
+               0 4px 6px rgba(0, 0, 0, 0.08);
+  
+  /* Special Effects */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark Mode */
+.dark {
+  --bg-primary: #18181b;
+  --bg-secondary: #27272a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color: #3f3f46;
+  --accent-color: #60a5fa;
+  --hover-color: #3b82f6;
+  
+  /* Dark Mode Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3),
+               0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3),
+               0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3),
+               0 4px 6px rgba(0, 0, 0, 0.35);
+  
+  /* Dark Glass Effect */
+  --glass-bg: rgba(23, 23, 26, 0.8);
+  --glass-border: rgba(63, 63, 70, 0.4);
+  --glass-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Custom Scrollbar - Hidden by Default */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+/* Show scrollbar on hover */
+*:hover::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+}
+
+/* Glass Effect for Elements */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Utility Classes */
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+/* Smooth Transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Remove focus outline for mouse users, keep for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Maintain focus outline for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+/* Prevent text selection on interactive elements */
+button, 
+.no-select {
+  user-select: none;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.card {
+  padding: 2em;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
